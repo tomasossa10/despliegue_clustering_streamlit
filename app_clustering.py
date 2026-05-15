@@ -78,9 +78,18 @@ data[['tenure', 'MonthlyCharges']] = min_max_scaler.transform(data[['tenure', 'M
 
 """# **Predicción**"""
 
+perfiles = {
+    0: "Clientes nuevos con poca antigüedad de 15 meses, cargo mensual de 49 dólares, tienen DSL, contrato mes a mes, no tienen ningún servicio adicional, reciben factura digital.",
+    1: "Clientes relativamente nuevos con antigüedad de 20 meses, cargo mensual de 86 dólares, usan fibra óptica, pagan por cheque electrónico, contrato mes a mes, no tienen ningún servicio adicional, reciben factura digital.",
+    2: "Clientes con antigüedad media de 31 meses, cargo mensual bajo de alrededor de 21 dólares, sin servicio de internet ni servicios adicionales, contrato mes a mes, sin pareja ni dependientes, no reciben factura digital.",
+    3: "Clientes con antigüedad alta de 57 meses, cargo mensual de 102 dólares, tienen fibra óptica, tienen pareja, tienen todos los servicios adicionales, reciben factura digital.",
+    4: "Clientes con antigüedad alta de 51 meses, cargo mensual de 67 dólares, tienen DSL, contrato a dos años, tienen pareja, tienen todos los servicios adicionales, reciben factura digital."
+}
+
 # Botón y predicción
 if st.button('Predecir'):
     cluster = modelo.predict(data)[0]
     st.subheader(f'Clúster asignado: {cluster}')
+    st.write(perfiles[cluster])
     st.dataframe(centroides.iloc[[cluster]])
     st.warning("Modelo con silueta de 0.208")
